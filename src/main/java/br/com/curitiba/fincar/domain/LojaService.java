@@ -3,6 +3,7 @@ package br.com.curitiba.fincar.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class LojaService {
 
@@ -11,6 +12,10 @@ public class LojaService {
 
     public Iterable<Loja> getLojas() {
         return rep.findAll();
+    }
+
+    public Loja getLojaPorCnpj(String cnpjLoja) {
+        return rep.findByCnpjLoja(cnpjLoja);
     }
 
     public Loja save(Loja loja) {
