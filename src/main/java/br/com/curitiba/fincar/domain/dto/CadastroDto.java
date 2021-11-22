@@ -9,6 +9,8 @@ public class CadastroDto {
 
     private String razaoSocial;
 
+    private String nomeBanco;
+
     private String nBanco;
 
     private String nAgencia;
@@ -19,7 +21,7 @@ public class CadastroDto {
 
     private String rua;
 
-    private int numeroEndereco;
+    private String numeroEndereco;
 
     private String complementoEndereco;
 
@@ -55,6 +57,14 @@ public class CadastroDto {
 
     public String getRazaoSocial() {
         return razaoSocial;
+    }
+
+    public String getNomeBanco() {
+        return nomeBanco;
+    }
+
+    public void setNomeBanco(String nomeBanco) {
+        this.nomeBanco = nomeBanco;
     }
 
     public void setRazaoSocial(String razaoSocial) {
@@ -101,11 +111,11 @@ public class CadastroDto {
         this.rua = rua;
     }
 
-    public int getNumeroEndereco() {
+    public String getNumeroEndereco() {
         return numeroEndereco;
     }
 
-    public void setNumeroEndereco(int numeroEndereco) {
+    public void setNumeroEndereco(String numeroEndereco) {
         this.numeroEndereco = numeroEndereco;
     }
 

@@ -1,4 +1,4 @@
-package br.com.curitiba.fincar.api;
+package br.com.curitiba.fincar.api.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

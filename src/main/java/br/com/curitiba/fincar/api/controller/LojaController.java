@@ -1,8 +1,8 @@
-package br.com.curitiba.fincar.api;
+package br.com.curitiba.fincar.api.controller;
 
 import br.com.curitiba.fincar.domain.Banco;
 import br.com.curitiba.fincar.domain.Loja;
-import br.com.curitiba.fincar.domain.LojaService;
+import br.com.curitiba.fincar.domain.service.LojaService;
 import br.com.curitiba.fincar.domain.dto.CadastroDto;
 import br.com.curitiba.fincar.domain.exception.CadastroLojaException;
 import br.com.curitiba.fincar.domain.service.BancoService;
@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -23,7 +22,7 @@ import java.util.Optional;
 public class LojaController {
 
     @Autowired
-    private LojaService service;
+    private LojaService lojaService;
 
     @Autowired
     private BancoService bancoService;
@@ -32,7 +31,7 @@ public class LojaController {
     private CadastroService cadastroService;
 
     public LojaController(LojaService service, BancoService bancoService, CadastroService cadastroService) {
-        this.service = service;
+        this.lojaService = service;
         this.bancoService = bancoService;
         this.cadastroService = cadastroService;
     }
@@ -41,13 +40,13 @@ public class LojaController {
     @Secured({"ROLE_ADMIN"})
     @ApiOperation(value= "Lista as lojas cadastradas na base")
     public Iterable<Loja> get() {
-        return service.getLojas();
+        return lojaService.getLojas();
     }
 
     @GetMapping("/{cnpj}")
     @ApiOperation(value= "Busca na base uma loja por CNPJ")
     public ResponseEntity get(@PathVariable("cnpj") String cnpj) {
-        Optional<Loja> loja = Optional.ofNullable(service.getLojaPorCnpj(cnpj));
+        Optional<Loja> loja = Optional.ofNullable(lojaService.getLojaPorCnpj(cnpj));
 
         if(loja.isPresent()) {
             Loja lojaEncontrada = loja.get();
@@ -74,10 +73,10 @@ public class LojaController {
     }
 
     @PostMapping("/cadastrarLoja")
-    @Secured({"ROLE_ADMIN"})
+//    @Secured({"ROLE_ADMIN"})
     @ApiOperation(value= "Cadastra um novo cliente/usuário")
     public void cadastraLoja(@RequestBody CadastroDto cadastroDto) throws CadastroLojaException {
-//        Loja l = service.save(loja);
+
        try {
            cadastroService.cadastrarLoja(cadastroDto);
        } catch (Exception e) {

@@ -1,7 +1,6 @@
 package br.com.curitiba.fincar.domain.service;
 
-import br.com.curitiba.fincar.domain.Loja;
-import br.com.curitiba.fincar.domain.LojaService;
+import br.com.curitiba.fincar.domain.*;
 import br.com.curitiba.fincar.domain.dto.CadastroDto;
 import br.com.curitiba.fincar.domain.exception.CadastroLojaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +12,78 @@ import java.util.InputMismatchException;
 @Service
 public class CadastroService {
 
-    private Loja loja;
-
     @Autowired
     private LojaService lojaService;
+
+    @Autowired
+    private EnderecoLojaService enderecoLojaService;
+
+    @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private DadoBancarioService dadoBancarioService;
 
     @Transactional
     public void cadastrarLoja(CadastroDto cadastroDto) throws CadastroLojaException {
 
-//        if(lojaService.getLojaPorCnpj(cadastroDto.getcnpj()).isPresent()) {
-//            throw new CadastroLojaException("cnpj ja cadastrado na base");
-//        }
+        try {
+            cadastrarDadosBasicosLoja(cadastroDto);
+
+            cadastrarEnderecoLoja(cadastroDto);
+
+            cadastrarUsuarioResponsavelLoja(cadastroDto);
+
+            cadastrarDadosBancariosLoja(cadastroDto);
+        } catch (Exception e) {
+            throw new CadastroLojaException("Nao foi possivel concluir o cadastro da loja");
+        }
+    }
+
+    private void cadastrarUsuarioResponsavelLoja(CadastroDto cadastroDto) {
+
+        Usuario usuario = new Usuario();
+        usuario.setCpfUsuario(cadastroDto.getCpfResponsavel());
+        usuario.setNomeContato(cadastroDto.getNomeResponsavel());
+        usuario.setTelefoneCelular(cadastroDto.getnTelefoneResponsavel());
+        usuario.setTelefoneComercial(cadastroDto.getnTelefoneComercia());
+        usuario.setSenha(cadastroDto.getSenhaAcesso());
+        usuario.setEmail(cadastroDto.getEmailResponsavel());
+        usuarioService.save(usuario);
+    }
+
+    private void cadastrarEnderecoLoja(CadastroDto cadastroDto) {
+
+        EnderecoLoja enderecoLoja = new EnderecoLoja();
+        enderecoLoja.setCep(cadastroDto.getCep());
+        enderecoLoja.setBairro(cadastroDto.getBairro());
+        enderecoLoja.setCidade(cadastroDto.getCidade());
+        enderecoLoja.setUf(cadastroDto.getEstado());
+        enderecoLoja.setLogradouro(cadastroDto.getRua());
+        enderecoLoja.setNumero(cadastroDto.getNumeroEndereco());
+        enderecoLoja.setComplemento(cadastroDto.getComplementoEndereco());
+        enderecoLoja.setIdCnpj(cadastroDto.getCnpj());
+        enderecoLojaService.save(enderecoLoja);
+    }
+
+    private void cadastrarDadosBasicosLoja(CadastroDto cadastroDto) {
+
+        Loja loja = new Loja();
+        loja.setCnpjLoja(cadastroDto.getCnpj());
+        loja.setRazaoSocial(cadastroDto.getRazaoSocial());
+        loja.setSite(cadastroDto.getSiteLoja());
+        lojaService.save(loja);
+    }
+
+    private void cadastrarDadosBancariosLoja(CadastroDto cadastroDto) {
+
+        DadoBancario dadoBancario = new DadoBancario();
+        dadoBancario.setCodigoBanco(cadastroDto.getnBanco());
+        dadoBancario.setNomeBanco(cadastroDto.getNomeBanco());
+        dadoBancario.setAgencia(cadastroDto.getnAgencia());
+        dadoBancario.setNumeroContaCorrente(cadastroDto.getContaCorrente());
+        dadoBancario.setIdCnpj(cadastroDto.getCnpj());
+        dadoBancarioService.save(dadoBancario);
 
     }
 

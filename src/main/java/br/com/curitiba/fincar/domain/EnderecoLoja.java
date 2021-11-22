@@ -11,7 +11,7 @@ public class EnderecoLoja {
     private String uf;
     private String cidade;
     private String bairro;
-    private String tipoLogadouro;
+    private String logradouro;
     private String numero;
     private String complemento;
     private String cep;
@@ -25,7 +25,7 @@ public class EnderecoLoja {
         this.uf = uf;
         this.cidade = cidade;
         this.bairro = bairro;
-        this.tipoLogadouro = tipoLogadouro;
+        this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.cep = cep;
@@ -63,12 +63,12 @@ public class EnderecoLoja {
         this.bairro = bairro;
     }
 
-    public String getTipoLogadouro() {
-        return tipoLogadouro;
+    public String getLogradouroo() {
+        return logradouro;
     }
 
-    public void setTipoLogadouro(String tipoLogadouro) {
-        this.tipoLogadouro = tipoLogadouro;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = logradouro;
     }
 
     public String getNumero() {

@@ -1,5 +1,7 @@
-package br.com.curitiba.fincar.domain;
+package br.com.curitiba.fincar.domain.service;
 
+import br.com.curitiba.fincar.domain.Loja;
+import br.com.curitiba.fincar.domain.LojaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
